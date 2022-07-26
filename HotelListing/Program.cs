@@ -1,4 +1,7 @@
+using HotelListing.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Microsoft.Extensions.Configuration;
 using Serilog;
 using Serilog.Events;
 
@@ -18,7 +21,9 @@ var logger = new LoggerConfiguration()
 builder.Logging.ClearProviders();
 builder.Logging.AddSerilog(logger);
 
-builder.Services.AddControllers();
+builder.Services.AddDbContext<DatabaseContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("sqlConnection"))
+);
 
 builder.Services.AddCors(o =>
 {
@@ -34,6 +39,8 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "HotelListing", Version = "v1" });
 });
+
+builder.Services.AddControllers();
 
 try
 {
