@@ -9,6 +9,7 @@ using HotelListing.Repository;
 using HotelListing.IRepository;
 using Microsoft.AspNetCore.Identity;
 using HotelListing;
+using HotelListing.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +33,7 @@ builder.Services.AddDbContext<DatabaseContext>(options =>
 
 builder.Services.AddAuthentication();
 builder.Services.ConfigureIdentity();
+builder.Services.ConfigureJWT(builder.Configuration);
 
 builder.Services.AddCors(o =>
 {
@@ -44,6 +46,7 @@ builder.Services.AddCors(o =>
 builder.Services.AddAutoMapper(typeof(MapperInitializer));
 
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IAuthManager, AuthManager>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -74,6 +77,7 @@ try
 
     app.UseCors("AllowAll");
 
+    app.UseAuthentication();
     app.UseAuthorization();
 
     app.MapControllers();
