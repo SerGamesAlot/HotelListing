@@ -7,6 +7,8 @@ using Serilog.Events;
 using HotelListing.Configurations;
 using HotelListing.Repository;
 using HotelListing.IRepository;
+using Microsoft.AspNetCore.Identity;
+using HotelListing;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +29,9 @@ builder.Logging.AddSerilog(logger);
 builder.Services.AddDbContext<DatabaseContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("sqlConnection"))
 );
+
+builder.Services.AddAuthentication();
+builder.Services.ConfigureIdentity();
 
 builder.Services.AddCors(o =>
 {

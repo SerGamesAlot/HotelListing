@@ -48,7 +48,7 @@ namespace HotelListing.Controllers
             try
             {
                 var hotel = await _unitOfWork.Hotels.Get(q => q.Id == id, include: q => q.Include(x => x.Country));
-                var results = _mapper.Map<IList<HotelDTO>>(hotel);
+                var results = _mapper.Map<HotelDTO>(hotel);
                 return Ok(results);
             }
             catch (Exception ex)
