@@ -73,6 +73,8 @@ try
 
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HotelListing v1"));
 
+    app.ConfigureExceptionHandler();
+
     app.UseHttpsRedirection();
 
     app.UseCors("AllowAll");
