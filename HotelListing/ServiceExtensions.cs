@@ -8,6 +8,8 @@ using System.Text;
 using Microsoft.AspNetCore.Diagnostics;
 using Serilog;
 using HotelListing.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 
 namespace HotelListing
 {
@@ -66,6 +68,17 @@ namespace HotelListing
                         }.ToString());
                     }
                 });
+            });
+        }
+
+        public static void ConfigureVersioning(this IServiceCollection services)
+        {
+            services.AddApiVersioning(opt =>
+            {
+                opt.ReportApiVersions = true;
+                opt.AssumeDefaultVersionWhenUnspecified = true;
+                opt.DefaultApiVersion = new ApiVersion(1, 0);
+                opt.ApiVersionReader = new HeaderApiVersionReader("api-version");//////type Api version in header
             });
         }
     }

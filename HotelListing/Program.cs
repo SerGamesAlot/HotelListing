@@ -57,6 +57,8 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddControllers().AddNewtonsoftJson(op => op.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
+builder.Services.ConfigureVersioning();
+
 try
 {
     logger.Information("Application is Starting");
